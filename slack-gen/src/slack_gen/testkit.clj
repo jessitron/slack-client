@@ -11,6 +11,7 @@
   "Not implemented"
   true)
 
+;; TODO: stick a :- in defgen's expected args
 (defgen new-channel-name t/ChannelName (gen/such-that nonexistent? slgen/channel-name))
 
 (s/defn populate [ch :- t/ChannelId
