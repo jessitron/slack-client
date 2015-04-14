@@ -1,1 +1,0 @@
-([:dependencies ([org.clojure/clojure "1.6.0"] [org.clojure/test.check "0.6.2"] [prismatic/schema "0.3.3"] [schematron/schematron "0.1.0-SNAPSHOT"] [jessitron/slack "0.1.0-SNAPSHOT"] [jessitron/slack-schema "0.1.0-SNAPSHOT"])])
