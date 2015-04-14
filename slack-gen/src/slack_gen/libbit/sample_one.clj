@@ -3,5 +3,6 @@
             [schema.core :as s]))
 
 ;; TODO - this is where I want to say "generator of A" and "this returns an A"
-(defn sample-one [g :- (s/record clojure.test.check.generators.Gen)]
+(s/defn sample-one
+  [g :- (s/record clojure.test.check.generators.Generator {:gen s/Any})]
   (last (gen/sample g)))
