@@ -51,12 +51,12 @@
 ;; Messages
 ;;
 (s/defschema SlackTimestamp
-  "Seconds since epoch"
+  "Seconds since epoch, in a string"
   (s/named s/Str "Slack Timestamp"))
 (s/defn slack-timestamp->date [ts :- SlackTimestamp]
-  (coerce/from-long ((Double/parseDouble ts) * 1000)))
-(s/defn date->slack-timestamp [d :- DateTime]
-  (long (/ (coerce/to-long d) 1000)))
+  (coerce/from-long (long (* (Double/parseDouble ts) 1000))))
+(s/defn date->slack-timestamp :- SlackTimestamp [d :- DateTime]
+  (format "%.3f" (double (/ (coerce/to-long d) 1000))))
 (s/defschema Message {(s/optional-key :user) UserId    ;; not populated for bot messages
                       (s/optional-key :username) UserName ;; not populated for channel join
                       :type (s/eq "message")
