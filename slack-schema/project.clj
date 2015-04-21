@@ -7,4 +7,5 @@
                  [org.clojure/test.check "0.7.0"]
                  [clj-time "0.9.0"]
                  [jessitron/var-schema "0.1.0"]
-                 [prismatic/schema "0.3.7"]])
+                 [prismatic/schema "0.3.7"]]
+            :profiles {:test {:dependencies [[clj-time-gen "0.1.0-SNAPSHOT"]]}})
