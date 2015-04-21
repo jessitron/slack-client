@@ -1,8 +1,9 @@
 (ns slack-schema.schemas
   (:require [schema.core :as s :refer [defschema]]
-            [util.char-range :refer [char-range]]
+            [slack-schema.libbit.char-range :refer [char-range]]
             [clj-time.coerce :as coerce]
-            [var-schema.core :refer [fmap]]))
+            [var-schema.core :refer [fmap]])
+  (:import (org.joda.time DateTime)))
 
 
 ;;
@@ -49,9 +50,13 @@
 ;;
 ;; Messages
 ;;
-(s/defschema SlackTimestamp (s/named s/Str "Slack Timestamp"))
-(s/defn slack-timestamp-to-date [ts :- SlackTimestamp]
+(s/defschema SlackTimestamp
+  "Seconds since epoch"
+  (s/named s/Str "Slack Timestamp"))
+(s/defn slack-timestamp->date [ts :- SlackTimestamp]
   (coerce/from-long ((Double/parseDouble ts) * 1000)))
+(s/defn date->slack-timestamp [d :- DateTime]
+  (long (/ (coerce/to-long d) 1000)))
 (s/defschema Message {(s/optional-key :user) UserId    ;; not populated for bot messages
                       (s/optional-key :username) UserName ;; not populated for channel join
                       :type (s/eq "message")

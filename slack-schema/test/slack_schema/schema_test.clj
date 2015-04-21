@@ -1,8 +1,16 @@
 (ns slack-schema.schema-test
-  (:require [slack-schema.schemas :as subject :refer [ChannelName max-channel-name-len]]
+  (:require [slack-schema.schemas :as subject :refer [ChannelName
+                                                      max-channel-name-len]]
             [clojure.test :refer [deftest is testing]]
+            [clojure.test.check.clojure-test :refer [defspec]]
+            [clojure.test.check.properties :as prop]
+            [clj-time-gen.generators :as clj-time-gen]
             [schema.core :as s]))
 
+
+;; Here, I mostly want to hit all the schemas at least once to see if they compile.
+;; This is also a chance to double-check that they do what I want. And document them
+;; with examples if that's helpful.
 
 (deftest channel-name-test
   (testing "the canonical channel"
@@ -25,3 +33,15 @@
     (is (not (nil? (s/check ChannelName "____")))))
   (testing "all dashes is not OK"
     (is (not (nil? (s/check ChannelName "----"))))))
+
+(deftest channel-test
+  (let [one-valid-channel {:id "dfkjdk" :name "random"}]
+    (testing "one valid channel"
+      (is (nil? (s/check subject/ChannelInfo one-valid-channel))))
+    (testing "must have id"
+      (is (not (nil? (s/check subject/ChannelInfo (dissoc one-valid-channel :id))))))))
+
+;; Timestamps
+(defspec slack-timestamp-round-trip 30
+         (prop/for-all [someday clj-time-gen/datetime]
+                       (is (= someday (subject/slack-timestamp->date (subject/date->slack-timestamp someday))))))
