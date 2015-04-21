@@ -1,5 +1,5 @@
 (ns slack-schema.schemas
-  (:require [schema.core :as s]
+  (:require [schema.core :as s :refer [defschema]]
             [util.char-range :refer [char-range]]
             [clj-time.coerce :as coerce]
             [var-schema.core :refer [fmap]]))
@@ -31,16 +31,17 @@
                                         "-" max-channel-name-len)))  ;; this could be prettier
                           "Channel Name"))
 
-(def ChannelInfo {
-                  :id s/Str
-                  :name s/Str
+(defschema ChannelId (s/named s/Str "ChannelId"))
+
+(def ChannelInfo {:id       ChannelId
+                  :name     ChannelName
                   s/Keyword s/Any})
 
 ;;
 ;; Users
 ;;
-(s/defschema UserId (s/named s/Str "UserId"))
-(s/defschema UserName (s/named s/Str "UserName"))
+(defschema UserId (s/named s/Str "UserId"))
+(defschema UserName (s/named s/Str "UserName"))
 (def UserInfo {:id UserId
                :name UserName
                s/Keyword s/Any})
@@ -50,7 +51,7 @@
 ;;
 (s/defschema SlackTimestamp (s/named s/Str "Slack Timestamp"))
 (s/defn slack-timestamp-to-date [ts :- SlackTimestamp]
-  (coerce/from-long (Double/parseDouble ts) * 1000))
+  (coerce/from-long ((Double/parseDouble ts) * 1000)))
 (s/defschema Message {(s/optional-key :user) UserId    ;; not populated for bot messages
                       (s/optional-key :username) UserName ;; not populated for channel join
                       :type (s/eq "message")
