@@ -1,4 +1,4 @@
-(ns util.char-range)
+(ns slack-schema.libbit.char-range)
 
 (defn- to-and-back [to from f]
                           (fn [& in]
