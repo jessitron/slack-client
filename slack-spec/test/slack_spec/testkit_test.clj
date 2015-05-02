@@ -1,4 +1,4 @@
-(ns slack-gen.testkit-test
+(ns slack-spec.testkit-test
   (:require [clojure.test :refer [deftest is testing]]
             [slack-gen.testkit :as subject]))
 

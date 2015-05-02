@@ -1,10 +1,10 @@
-(ns slack-gen.testkit
+(ns slack-spec.testkit
   (:require [slack.core :as slack]
             [schema.core :as s]
             [clojure.test.check.generators :as gen]
             [slack-schema.schemas :as t]
             [schematron.core :refer [defgen]]
-            [slack-gen.libbit.sample-one :refer [sample-one]]
+            [slack-spec.libbit.sample-one :refer [sample-one]]
             [slack-gen.mygen :as slgen]))
 
 (s/defn nonexistent? [ch :- t/ChannelName]

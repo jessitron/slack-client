@@ -1,4 +1,4 @@
-(ns slack-gen.libbit.sample-one
+(ns slack-spec.libbit.sample-one
   (:require [clojure.test.check.generators :as gen]
             [schema.core :as s]))
 

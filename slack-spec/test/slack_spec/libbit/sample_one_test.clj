@@ -1,6 +1,6 @@
-(ns slack-gen.libbit.sample-one-test
+(ns slack-spec.libbit.sample-one-test
   (:require [clojure.test :refer [deftest is testing]]
-            [slack-gen.libbit.sample-one :as subject]
+            [slack-spec.libbit.sample-one :as subject]
             [clojure.test.check.generators :as gen]
             [clojure.test.check.properties :as prop]
             [clojure.test.check.clojure-test :refer [defspec]]
